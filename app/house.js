@@ -33,7 +33,7 @@ class HouseApp extends App {
             });
 
             let price = await Price.create(price_data);
-            
+
             if (house) {
                 for (let i = 0; i < house_keys.length; i++) {
                     house[house_keys[i]] = data[house_keys[i]]
@@ -82,9 +82,13 @@ class HouseApp extends App {
         let content = document.getElementsByClassName('content-wrapper')[0];
         let title = content.getElementsByClassName('title')[0];
         let description = title.getElementsByClassName('sub')[0].textContent;
-        let middleman = document.getElementsByClassName('brokerName')[0].getElementsByTagName('a')[0].textContent;
-        let phone = content.getElementsByClassName("phone")[0].textContent;
-        phone = phone.replace(/\s*转\s*/g, '-').replace(/^\s*|\s*$/g, '')
+        let brokerName = document.getElementsByClassName('brokerName');
+        let middleman = "", phone = "";
+        if (brokerName.length) {
+            middleman = brokerName[0].getElementsByTagName('a')[0].textContent;
+            phone = content.getElementsByClassName("phone")[0].textContent;
+            phone = phone.replace(/\s*转\s*/g, '-').replace(/^\s*|\s*$/g, '')
+        }
         // let thumbnail = content.getElementsByClassName('thumbnail')[0]
         // let imgs = thumbnail.getElementsByTagName('img');
         // imgs = Array.from(imgs).map(x => x.src);
@@ -113,9 +117,18 @@ class HouseApp extends App {
                 info[k] = mat[1].replace(/<(\/|)[^>]*?>/g, "");
             }
         }
+        if (!info.id) {
+            info.id = id;
+            info.name = document.getElementsByClassName("main")[0].innerHTML;
+            info.price = document.getElementsByClassName("total")[0].innerHTML;
+            if (brokerName.length) {
+                info.looktimes = document.getElementsByClassName("time")[0].innerHTML;
+                info.looktimes = info.looktimes.match(/本房带看：(\d+)次/)[1];
+            }
+        }
         info.postdate = info.postdate * 24 * 3600 * 1000 + (new Date()).valueOf();
         return info;
-   }
+    }
 }
 
 module.exports = HouseApp;
