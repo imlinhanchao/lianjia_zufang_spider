@@ -1,0 +1,23 @@
+{
+  "name": "lianjia",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "iconv-lite": "^0.4.19",
+    "jsdom": "^11.5.1",
+    "mysql2": "^1.5.1",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2",
+    "sequelize": "^4.28.6",
+    "urlencode": "^1.1.0"
+  }
+}

@@ -1,0 +1,11 @@
+{
+    "db": {
+        "host": "ml.service.com",
+        "user": "ml",
+        "password": "ml_admin",
+        "database": "ml",
+        "port": 3306,
+        "dialect": "mysql",
+        "prefix": "ml_"
+    }
+}
