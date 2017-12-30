@@ -34,4 +34,5 @@ let House = require("./app/house");
             failed.id.push(j + 1);            
         }
     }
+    console.log(JSON.stringify(failed));
 })();
