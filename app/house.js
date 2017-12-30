@@ -18,31 +18,47 @@ class HouseApp extends App {
         return _error;
     }
 
-    static async insert(data) {
+    static async exists(id) {
         try {
-            let house_keys = House.keys();
-            let price_keys = Price.keys();
-
-            let house_data = App.filter(data, house_keys);
-            let price_data = App.filter(data, price_keys);
-
             let house = await House.findOne({
                 where: {
-                    id: data.id
+                    id: id
                 }
             });
+            return house;
+        } catch (error) {
+            if (err.isdefine) throw (err);
+            throw (App.error.db(err));
+        }
+    }
 
-            let price = await Price.create(price_data);
+    static async updatePrice(data) {
+        try {
+            let keys = Price.keys();
+            data = App.filter(data, keys);
+            return await Price.create(data);
+        } catch (err) {
+            if (err.isdefine) throw (err);
+            throw (App.error.db(err));
+        }
+    }
 
+    static async insert(data) {
+        try {
+            let keys = House.keys();
+            let price = await HouseApp.updatePrice(data);
+            data = App.filter(data, keys);            
+
+            let house = await HouseApp.exists(data.id);
             if (house) {
-                for (let i = 0; i < house_keys.length; i++) {
-                    house[house_keys[i]] = data[house_keys[i]]
+                for (let i = 0; i < keys.length; i++) {
+                    house[keys[i]] = data[keys[i]]
                 }
                 house.save();
                 return true;
             }
 
-            house = await House.create(house_data);
+            house = await House.create(data);
 
             return true;
         } catch (err) {
