@@ -13,7 +13,9 @@ let House = require("./app/house");
             for (let i = 0; i < infos.length; i++) {
                 try {
                     if (!House.exists(infos[i].id)) {
-                        House.insert(infos[i]);
+                        let info = await House.getDetail(infos[i].id);
+                        info = Object.assign(infos[i], info);
+                        await House.insert(info);
                     } else {
                         await House.updatePrice(infos[i]);
                     }
