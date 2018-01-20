@@ -16,10 +16,11 @@ let House = require("./app/house");
                         let info = await House.getDetail(infos[i].id);
                         info = Object.assign(infos[i], info);
                         await House.insert(info);
+                        console.log(`Get id ${infos[i].id} info success!`);
                     } else {
                         await House.updatePrice(infos[i]);
+                        console.log(`Update id ${infos[i].id} price success!`);
                     }
-                    console.log(`Update id ${infos[i].id} price success!`);
                 } catch (error) {
                     console.log(`Update id ${infos[i].id} price failed!`);
                     console.log(`error message:${error}`);
