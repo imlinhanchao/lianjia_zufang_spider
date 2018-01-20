@@ -12,7 +12,11 @@ let House = require("./app/house");
             let infos = await House.getSummarys(j + 1);
             for (let i = 0; i < infos.length; i++) {
                 try {
-                    await House.updatePrice(infos[i]);
+                    if (!House.exists(infos[i].id)) {
+                        House.insert(infos[i]);
+                    } else {
+                        await House.updatePrice(infos[i]);
+                    }
                     console.log(`Update id ${infos[i].id} price success!`);
                 } catch (error) {
                     console.log(`Update id ${infos[i].id} price failed!`);
